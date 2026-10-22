@@ -1,6 +1,6 @@
 {
   "name": "token-dragon",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "A pixel dragon above the prompt that grows one segment per 2% of the 5-hour rate-limit window, changes colour each window, breathes fire, and turns to bones at 100%",
   "types": "./types/index.d.ts",
   "userConfig": {

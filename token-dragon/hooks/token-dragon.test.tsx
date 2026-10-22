@@ -161,8 +161,8 @@ test('a narrow band clips the tail, never the info column', async ($, on) => {
 
   const image = await ui.find({ type: 'Image', key: 'dragon' })
   const columns = image?.props.columns as number
-  expect(columns).toBeLessThanOrEqual(50 - 26 - 2)
-  expect(columns).toBeGreaterThan(20)
+  expect(columns).toBeLessThanOrEqual(50 - 26 - 2 - 4) // info, gap, border and its padding
+  expect(columns).toBe(50 - 26 - 2 - 4) // the dragon takes all that is left
   await ui.unmount()
 })
 
@@ -458,4 +458,31 @@ test('the dragon breathes during the animation', async ($, on) => {
   // fire frames carry more pixels, so a breath shows as frames well above the resting size
   expect(Math.max(...sizes)).toBeGreaterThan(Math.min(...sizes) + 300)
   await ui.unmount()
+})
+
+// The band is framed in the dragon's own colour: the colour its name is drawn
+// in, grey for bones.
+async function frameOf($: Engine, on: On, percent: number) {
+  mock.clock(on)
+  await boot($, on, usageAt(percent))
+  const ui = await $.ui.mount(BAND)
+  const root = (await ui.drawn()) as { type: string; props: Record<string, unknown> }
+  const name = await ui.find({ type: 'Text', text: percent >= 100 ? /뼈/ : /룡$/ })
+  await ui.unmount()
+
+  return { root, nameColor: name?.props.color }
+}
+
+test('the band is framed in the colour of the dragon', async ($, on) => {
+  const { root, nameColor } = await frameOf($, on, 50)
+
+  expect(root.props.borderStyle).toBe('round')
+  expect(typeof nameColor).toBe('string')
+  expect(root.props.borderColor).toBe(nameColor)
+})
+
+test('bones are framed in grey', async ($, on) => {
+  const { root } = await frameOf($, on, 100)
+
+  expect(root.props.borderColor).toBe('#9e9e9e')
 })

@@ -10,6 +10,8 @@ import { encodePng } from './png'
 
 const INFO_W = 26
 const GAP = 2
+/** The frame's two border columns and one column of padding inside each. */
+const FRAME_W = 4
 
 // ---------------------------------------------------------------------------
 // Animation: the body's wave moves a step per frame, the eye blinks now and then
@@ -227,10 +229,12 @@ export const register: Register = (on, options) => {
     const dead = five.percent >= 100
     const { hue, pal } = paletteOf(five.resetsAt ?? 'none')
     const whole = render(five.percent, dead ? BONES : pal, dead, { phase: phaseNow(), breath: breathOf(frame), seed: frame })
-    const columns = Math.max(1, Math.min(Math.ceil(whole.width / CELL_W), e.props.bodyColumns - INFO_W - GAP))
+    const columns = Math.max(1, Math.min(Math.ceil(whole.width / CELL_W), e.props.bodyColumns - INFO_W - GAP - FRAME_W))
     const rows = whole.height / CELL_H
     const pic = crop(whole, columns * CELL_W)
     const name = dead ? '용의 뼈' : nameOf(hue)
+    // the dragon's own colour, for its name and the band's frame; grey for bones
+    const tint = dead ? '#9e9e9e' : hex((pal.M2[0] << 16) | (pal.M2[1] << 8) | pal.M2[2])
     const { Box, Text } = $.ui.resolve(e)
 
     // the frames go where the terminal shows the image; text and bones lie still
@@ -275,9 +279,9 @@ export const register: Register = (on, options) => {
     })()
 
     return (
-      <Box flexDirection="row" gap={GAP}>
+      <Box flexDirection="row" gap={GAP} borderStyle="round" borderColor={tint} paddingX={1}>
         <Box flexDirection="column" width={INFO_W}>
-          <Text color={dead ? '#9e9e9e' : hex((pal.M2[0] << 16) | (pal.M2[1] << 8) | pal.M2[2])} weight="bold">{name}</Text>
+          <Text color={tint} weight="bold">{name}</Text>
           <Text>
             <Text dimColor>5h  </Text>
             <Text color="#7cc47f">{bar(five.percent)}</Text> {five.percent}%

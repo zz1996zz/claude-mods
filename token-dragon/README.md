@@ -6,7 +6,7 @@ A pixel dragon that lives above the Claude Code prompt and grows with your 5-hou
 - **Changes colour** every window: the hue is taken from the window's reset time, so it stays the same dragon until the window resets.
 - **Moves**: the body undulates, the eye blinks, and every few seconds it lifts its head and breathes fire.
 - **Dies** at 100%: only bones remain until the window resets.
-- Shows the 5-hour and 7-day bars and their reset times on the left.
+- Shows the 5-hour and 7-day bars and their reset times on the left, the whole band framed in the dragon's colour.
 
 It reads the rate-limit windows Claude Code reports, so it shows on a Claude subscription; with an API key there is nothing to draw and the band stays empty.
 
