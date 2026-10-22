@@ -1,0 +1,15 @@
+{
+  "name": "local-mods",
+  "owner": {
+    "name": "zz1996zz",
+    "url": "https://github.com/zz1996zz"
+  },
+  "plugins": [
+    {
+      "name": "token-dragon",
+      "source": "./token-dragon",
+      "description": "A pixel dragon above the prompt that grows one segment per 2% of the 5-hour rate-limit window, changes colour each window, breathes fire, and turns to bones at 100%"
+    }
+  ],
+  "description": "Mods for Claude Code: small plugins that change its own interface"
+}

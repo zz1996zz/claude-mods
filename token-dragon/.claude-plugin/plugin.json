@@ -1,0 +1,25 @@
+{
+  "name": "token-dragon",
+  "version": "0.6.0",
+  "description": "A pixel dragon above the prompt that grows one segment per 2% of the 5-hour rate-limit window, changes colour each window, breathes fire, and turns to bones at 100%",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "renderer": {
+      "type": "string",
+      "title": "Renderer",
+      "description": "How the dragon is drawn on the terminal: auto picks an inline image on terminals known to draw one (iTerm2 3.5+, kitty, Ghostty, Orca with kitty images) and plain colored half-block text elsewhere; image or blocks forces one",
+      "default": "auto",
+      "options": [
+        "auto",
+        "image",
+        "blocks"
+      ]
+    }
+  },
+  "license": "MIT",
+  "author": {
+    "name": "zz1996zz",
+    "url": "https://github.com/zz1996zz"
+  },
+  "repository": "https://github.com/zz1996zz/claude-mods"
+}
